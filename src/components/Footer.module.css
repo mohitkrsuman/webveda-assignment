@@ -1,0 +1,33 @@
+.footer {
+  composes: shell from "../styles/shell.module.css";
+  border-top: 1px solid var(--color-border);
+  padding-top: 28px;
+  padding-bottom: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.links {
+  display: flex;
+  gap: 20px;
+  font-size: 14px;
+}
+
+.links a {
+  color: var(--color-muted);
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.links a:hover {
+  color: var(--color-text);
+}
+
+.copy {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-copy);
+}

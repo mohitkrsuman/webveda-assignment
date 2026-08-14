@@ -1,0 +1,105 @@
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: color-mix(in srgb, var(--color-bg) 78%, transparent);
+  backdrop-filter: blur(16px);
+}
+
+.nav {
+  composes: shell from "../styles/shell.module.css";
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.logo {
+  font-family: var(--font-serif);
+  font-size: clamp(22px, 4vw, 28px);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  min-width: 0;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.navLink {
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-muted);
+  transition: color 160ms ease;
+}
+
+.navLink:hover {
+  color: var(--color-text);
+}
+
+.profile {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 4px 10px 4px 4px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  cursor: pointer;
+  color: var(--color-text);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-ink);
+  background: var(--color-accent);
+}
+
+.profileCopy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.15;
+  padding-right: 6px;
+}
+
+.profileName {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.profileHint {
+  font-size: 11px;
+  color: var(--color-faint);
+}
+
+@media (max-width: 639px) {
+  .navLink {
+    display: none;
+  }
+
+  .profileCopy {
+    display: none;
+  }
+
+  .profile {
+    padding: 4px;
+    min-width: 44px;
+    justify-content: center;
+  }
+}
