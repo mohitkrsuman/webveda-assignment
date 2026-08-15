@@ -9,9 +9,11 @@ type Props = {
 
 export default function CourseCard({ course, region }: Props) {
   return (
-    <article style={styles.glassCard}>
+    <article className="skillpath-card" style={styles.glassCard}>
       <p style={styles.category}>{course.mainCategory}</p>
-      <h3 style={styles.title}>{course.courseName}</h3>
+      <h3 className="skillpath-title" style={styles.title}>
+        {course.courseName}
+      </h3>
       <p style={styles.description}>{course.description}</p>
       <p style={styles.price}>{formatPrice(course, region)}</p>
     </article>

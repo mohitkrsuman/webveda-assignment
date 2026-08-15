@@ -10,16 +10,43 @@ const glass: CSSProperties = {
 }
 
 export const GRID_CSS = `
+.skillpath-root {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  container-type: inline-size;
+  container-name: skillpath;
+}
+.skillpath-root *,
+.skillpath-root *::before,
+.skillpath-root *::after {
+  box-sizing: border-box;
+}
 .skillpath-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
   width: 100%;
+  min-width: 0;
 }
-@media (min-width: 640px) {
+.skillpath-card {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+.skillpath-heading {
+  font-size: clamp(22px, 6cqw, 36px);
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+.skillpath-title {
+  overflow-wrap: anywhere;
+}
+@container skillpath (min-width: 520px) {
   .skillpath-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-@media (min-width: 1024px) {
+@container skillpath (min-width: 860px) {
   .skillpath-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 `
@@ -27,8 +54,10 @@ export const GRID_CSS = `
 export const styles = {
   root: {
     width: "100%",
+    maxWidth: "100%",
+    minWidth: 0,
     color: "#f6f3ec",
-    padding: 28,
+    padding: "clamp(16px, 4cqw, 28px)",
     borderRadius: 28,
     background:
       "linear-gradient(165deg, rgba(255,255,255,0.1) 0%, rgba(8,10,16,0.28) 100%)",
@@ -40,6 +69,7 @@ export const styles = {
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "space-between",
+    alignItems: "flex-end",
     gap: 12,
     marginBottom: 24,
   } satisfies CSSProperties,
@@ -47,18 +77,24 @@ export const styles = {
     margin: 0,
     fontSize: 36,
     fontWeight: 400,
+    minWidth: 0,
+    flex: "1 1 200px",
   } satisfies CSSProperties,
   note: {
     margin: 0,
     fontSize: 13,
     opacity: 0.75,
+    flex: "1 1 160px",
   } satisfies CSSProperties,
   glassCard: {
     ...glass,
-    padding: 22,
-    minHeight: 220,
+    padding: "clamp(16px, 3cqw, 22px)",
+    minHeight: 180,
     display: "flex",
     flexDirection: "column",
+    minWidth: 0,
+    maxWidth: "100%",
+    overflow: "hidden",
   } satisfies CSSProperties,
   category: {
     margin: 0,
@@ -70,7 +106,8 @@ export const styles = {
   } satisfies CSSProperties,
   title: {
     margin: "12px 0 8px",
-    fontSize: 20,
+    fontSize: "clamp(16px, 4cqw, 20px)",
+    overflowWrap: "anywhere",
   } satisfies CSSProperties,
   description: {
     margin: 0,

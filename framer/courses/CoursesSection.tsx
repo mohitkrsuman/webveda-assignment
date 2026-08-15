@@ -73,6 +73,7 @@ export default function CoursesSection(props: CoursesSectionProps) {
 
   return (
     <div
+      className="skillpath-root"
       style={{
         ...styles.root,
         ["--accent" as string]: accentColor,
@@ -80,7 +81,9 @@ export default function CoursesSection(props: CoursesSectionProps) {
     >
       <style>{GRID_CSS}</style>
       <div style={styles.header}>
-        <h2 style={styles.heading}>{heading}</h2>
+        <h2 className="skillpath-heading" style={styles.heading}>
+          {heading}
+        </h2>
         {status === "ready" && regionGuessed ? (
           <p style={styles.note}>Showing USD while we confirm your region.</p>
         ) : null}
