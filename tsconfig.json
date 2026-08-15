@@ -19,5 +19,5 @@
       "framer": ["./src/framer-shim.ts"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "framer"]
 }
