@@ -9,7 +9,7 @@ type Props = {
 
 export default function CourseCard({ course, region }: Props) {
   return (
-    <article className="skillpath-card" style={styles.glassCard}>
+    <article className="skillpath-card skillpath-course" style={styles.glassCard}>
       <p style={styles.category}>{course.mainCategory}</p>
       <h3 className="skillpath-title" style={styles.title}>
         {course.courseName}

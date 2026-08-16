@@ -35,13 +35,36 @@ export const GRID_CSS = `
   max-width: 100%;
   overflow: hidden;
 }
+.skillpath-course {
+  cursor: pointer;
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+}
+.skillpath-course:hover {
+  transform: translateY(-6px);
+  border-color: color-mix(in srgb, var(--accent, #e8ff4d) 55%, rgba(255,255,255,0.18));
+  box-shadow: 0 18px 40px rgba(0,0,0,0.28), 0 0 0 1px color-mix(in srgb, var(--accent, #e8ff4d) 35%, transparent);
+  background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.08) 100%);
+}
+.skillpath-course:hover .skillpath-title {
+  color: var(--accent, #e8ff4d);
+}
+@media (prefers-reduced-motion: reduce) {
+  .skillpath-course,
+  .skillpath-title { transition: none; }
+  .skillpath-course:hover { transform: none; }
+}
 .skillpath-heading {
   font-size: clamp(22px, 6cqw, 36px);
   line-height: 1.15;
   overflow-wrap: anywhere;
+  flex: 1 1 100%;
+}
+@container skillpath (min-width: 520px) {
+  .skillpath-heading { flex: 1 1 200px; }
 }
 .skillpath-title {
   overflow-wrap: anywhere;
+  transition: color 0.22s ease;
 }
 @container skillpath (min-width: 520px) {
   .skillpath-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -68,6 +91,70 @@ export const GRID_CSS = `
 @media (prefers-reduced-motion: reduce) {
   .skillpath-bone { animation: none; }
 }
+.skillpath-input {
+  color: #f6f3ec;
+  outline: none;
+  font-size: 16px;
+  max-width: 100%;
+}
+.skillpath-input::placeholder {
+  color: rgba(246, 243, 236, 0.45);
+}
+.skillpath-input:focus {
+  border-color: color-mix(in srgb, var(--accent, #e8ff4d) 70%, rgba(255,255,255,0.18));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent, #e8ff4d) 22%, transparent);
+}
+.skillpath-search-btn:hover {
+  filter: brightness(1.06);
+}
+.skillpath-toolbar {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  width: 100%;
+  min-width: 0;
+  margin-bottom: 16px;
+}
+.skillpath-search-group {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  min-width: 0;
+}
+.skillpath-search-btn {
+  width: 100%;
+}
+.skillpath-sort {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+}
+.skillpath-header {
+  margin-bottom: 16px;
+}
+@container skillpath (min-width: 480px) {
+  .skillpath-search-group {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .skillpath-search-btn {
+    width: auto;
+  }
+}
+@container skillpath (min-width: 720px) {
+  .skillpath-toolbar {
+    grid-template-columns: minmax(0, 1fr) minmax(180px, 240px);
+    align-items: end;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .skillpath-input {
+    font-size: 14px;
+  }
+  .skillpath-header {
+    margin-bottom: 24px;
+  }
+}
 `
 
 export const styles = {
@@ -90,20 +177,70 @@ export const styles = {
     justifyContent: "space-between",
     alignItems: "flex-end",
     gap: 12,
-    marginBottom: 24,
   } satisfies CSSProperties,
   heading: {
     margin: 0,
     fontSize: 36,
     fontWeight: 400,
     minWidth: 0,
-    flex: "1 1 200px",
+    flex: "1 1 100%",
   } satisfies CSSProperties,
   note: {
     margin: 0,
     fontSize: 13,
     opacity: 0.75,
     flex: "1 1 160px",
+  } satisfies CSSProperties,
+  toolbar: {
+    width: "100%",
+    minWidth: 0,
+  } satisfies CSSProperties,
+  searchGroup: {
+    minWidth: 0,
+  } satisfies CSSProperties,
+  searchInput: {
+    ...glass,
+    width: "100%",
+    minWidth: 0,
+    height: 44,
+    padding: "0 16px",
+    borderRadius: 999,
+    background: "rgba(255,255,255,0.08)",
+    color: "#f6f3ec",
+    WebkitAppearance: "none",
+    appearance: "none",
+  } satisfies CSSProperties,
+  searchButton: {
+    border: 0,
+    cursor: "pointer",
+    background: "var(--accent, #e8ff4d)",
+    color: "#111",
+    fontWeight: 600,
+    padding: "0 18px",
+    height: 44,
+    borderRadius: 999,
+    whiteSpace: "nowrap",
+  } satisfies CSSProperties,
+  sortLabel: {
+    minWidth: 0,
+  } satisfies CSSProperties,
+  sortCaption: {
+    fontSize: 11,
+    fontWeight: 600,
+    letterSpacing: "0.1em",
+    textTransform: "uppercase",
+    opacity: 0.7,
+  } satisfies CSSProperties,
+  sortSelect: {
+    ...glass,
+    width: "100%",
+    height: 44,
+    padding: "0 16px",
+    borderRadius: 999,
+    background: "rgba(255,255,255,0.08)",
+    color: "#f6f3ec",
+    WebkitAppearance: "none",
+    appearance: "none",
   } satisfies CSSProperties,
   glassCard: {
     ...glass,
@@ -146,7 +283,7 @@ export const styles = {
   } satisfies CSSProperties,
   state: {
     ...glass,
-    padding: 40,
+    padding: "clamp(20px, 6cqw, 40px)",
     textAlign: "center",
   } satisfies CSSProperties,
   stateTitle: {

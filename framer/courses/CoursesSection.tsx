@@ -1,9 +1,11 @@
-import { useEffect, useState, type CSSProperties } from "react"
+import { useEffect, useMemo, useState, type CSSProperties } from "react"
 import { addPropertyControls, ControlType } from "framer"
 import { getJson, parseRegion } from "./api.ts"
 import CourseCard from "./components/CourseCard.tsx"
+import CourseToolbar from "./components/CourseToolbar.tsx"
 import LoadingGrid from "./components/LoadingGrid.tsx"
 import StateCard from "./components/StateCard.tsx"
+import { filterAndSortCourses } from "./filterCourses.ts"
 import {
   API_PATHS,
   DEFAULT_ACCENT,
@@ -17,6 +19,7 @@ import type {
   CoursesSectionProps,
   LoadStatus,
   Region,
+  SortKey,
 } from "./types.ts"
 
 export default function CoursesSection(props: CoursesSectionProps) {
@@ -28,6 +31,14 @@ export default function CoursesSection(props: CoursesSectionProps) {
   const [region, setRegion] = useState<Region>(DEFAULT_REGION)
   const [regionGuessed, setRegionGuessed] = useState(false)
   const [reloadKey, setReloadKey] = useState(0)
+  const [draftQuery, setDraftQuery] = useState("")
+  const [query, setQuery] = useState("")
+  const [sort, setSort] = useState<SortKey>("featured")
+
+  const visibleCourses = useMemo(
+    () => filterAndSortCourses(courses, query, sort, region),
+    [courses, query, sort, region],
+  )
 
   useEffect(() => {
     const controller = new AbortController()
@@ -80,7 +91,7 @@ export default function CoursesSection(props: CoursesSectionProps) {
       } as CSSProperties}
     >
       <style>{GRID_CSS}</style>
-      <div style={styles.header}>
+      <div className="skillpath-header" style={styles.header}>
         <h2 className="skillpath-heading" style={styles.heading}>
           {heading}
         </h2>
@@ -108,15 +119,35 @@ export default function CoursesSection(props: CoursesSectionProps) {
       ) : null}
 
       {status === "ready" ? (
-        <div className="skillpath-grid">
-          {courses.map((course) => (
-            <CourseCard
-              key={course.courseCode || course.mangoId}
-              course={course}
-              region={region}
+        <>
+          <CourseToolbar
+            draftQuery={draftQuery}
+            sort={sort}
+            onDraftQueryChange={setDraftQuery}
+            onSearch={() => setQuery(draftQuery)}
+            onSortChange={setSort}
+          />
+          {visibleCourses.length === 0 ? (
+            <StateCard
+              title="No courses match that search"
+              actionLabel="Clear search"
+              onAction={() => {
+                setDraftQuery("")
+                setQuery("")
+              }}
             />
-          ))}
-        </div>
+          ) : (
+            <div className="skillpath-grid">
+              {visibleCourses.map((course) => (
+                <CourseCard
+                  key={course.courseCode || course.mangoId}
+                  course={course}
+                  region={region}
+                />
+              ))}
+            </div>
+          )}
+        </>
       ) : null}
     </div>
   )
