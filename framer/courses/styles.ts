@@ -49,6 +49,25 @@ export const GRID_CSS = `
 @container skillpath (min-width: 860px) {
   .skillpath-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
+@keyframes skillpath-shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+.skillpath-bone {
+  display: block;
+  border-radius: 8px;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.08) 0%,
+    rgba(255,255,255,0.22) 45%,
+    rgba(255,255,255,0.08) 90%
+  );
+  background-size: 200% 100%;
+  animation: skillpath-shimmer 1.2s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .skillpath-bone { animation: none; }
+}
 `
 
 export const styles = {
@@ -142,5 +161,30 @@ export const styles = {
     fontWeight: 600,
     padding: "10px 16px",
     borderRadius: 999,
+  } satisfies CSSProperties,
+  boneCategory: {
+    width: "38%",
+    height: 12,
+  } satisfies CSSProperties,
+  boneTitle: {
+    width: "78%",
+    height: 20,
+    marginTop: 12,
+  } satisfies CSSProperties,
+  boneLine: {
+    width: "100%",
+    height: 12,
+    marginTop: 10,
+  } satisfies CSSProperties,
+  boneLineShort: {
+    width: "64%",
+    height: 12,
+    marginTop: 8,
+    flex: 1,
+  } satisfies CSSProperties,
+  bonePrice: {
+    width: "32%",
+    height: 22,
+    marginTop: 18,
   } satisfies CSSProperties,
 }
